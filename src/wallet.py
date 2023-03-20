@@ -1,0 +1,18 @@
+from Crypto.PublicKey import RSA
+import binascii
+
+class wallet:
+    def __init__(self):
+        # create an RSA key pair
+        self.transactions = [];
+        key = RSA.generate(2048)
+        self.private_key = binascii.hexlify(key.exportKey()).decode();
+        self.public_key = binascii.hexlify(key.publickey().exportKey()).decode();
+        self.address = self.public_key;
+
+    def balance(self):
+        # return the balance of the wallet by adding all the available UTXO's
+        mysum = 0;
+        for transaction in self.transactions:
+            mysum += transaction['amount'];
+        return mysum;
